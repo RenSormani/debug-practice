@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { CssBaseline, Box, AppBar, Toolbar, Typography } from '@mui/material';
+import store from './redux/store';
+import UsersTable from './components/UsersTable';
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <CssBaseline />
+      <Box sx={{ minHeight: '100vh', backgroundColor: '#f0f2f5' }}>
+        {/* Top Navigation Bar */}
+        <AppBar position="static" sx={{ backgroundColor: '#1A1A2E' }}>
+          <Toolbar>
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: 'bold',
+                letterSpacing: 4,
+                color: '#FF6B00',
+              }}
+            >
+              DEBUG PRACTICE
+            </Typography>
+          </Toolbar>
+        </AppBar>
+
+        {/* Main Content */}
+        <UsersTable />
+      </Box>
+    </Provider>
   );
 }
-
-export default App;
