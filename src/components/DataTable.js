@@ -11,6 +11,7 @@ export default function DataTable({ title, data, loading, error }) {
       accessorKey: key,
       header: key.charAt(0).toUpperCase() + key.slice(1),
       size: 150,
+      filterFn: "contains",
       accessorFn: (row) => formatCellValue(row[key]),
       Cell: ({ renderedCellValue }) => <span>{renderedCellValue}</span>,
     }));
@@ -88,6 +89,7 @@ export default function DataTable({ title, data, loading, error }) {
             },
           },
         }}
+        globalFilterFn="contains"
         initialState={{
           showColumnFilters: true,
         }}
