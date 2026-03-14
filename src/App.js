@@ -1,33 +1,28 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { CssBaseline, Box, AppBar, Toolbar, Typography } from '@mui/material';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { CssBaseline } from '@mui/material';
 import store from './redux/store';
-import UsersTable from './components/UsersTable';
+import MainLayout from './layout/MainLayout';
+import UsersPage from './pages/UsersPage';
+import PostsPage from './pages/PostsPage';
+import TodosPage from './pages/TodosPage';
 
 export default function App() {
   return (
     <Provider store={store}>
-      <CssBaseline />
-      <Box sx={{ minHeight: '100vh', backgroundColor: '#f0f2f5' }}>
-        {/* Top Navigation Bar */}
-        <AppBar position="static" sx={{ backgroundColor: '#1A1A2E' }}>
-          <Toolbar>
-            <Typography
-              variant="h6"
-              sx={{
-                fontWeight: 'bold',
-                letterSpacing: 4,
-                color: '#FF6B00',
-              }}
-            >
-              DEBUG PRACTICE
-            </Typography>
-          </Toolbar>
-        </AppBar>
-
-        {/* Main Content */}
-        <UsersTable />
-      </Box>
+      <BrowserRouter>
+        <CssBaseline />
+        <MainLayout>
+          <Routes>
+            {/* Redirect root to users by default */}
+            <Route path="/" element={<Navigate to="/users" replace />} />
+            <Route path="/users" element={<UsersPage />} />
+            <Route path="/posts" element={<PostsPage />} />
+            <Route path="/todos" element={<TodosPage />} />
+          </Routes>
+        </MainLayout>
+      </BrowserRouter>
     </Provider>
   );
 }
