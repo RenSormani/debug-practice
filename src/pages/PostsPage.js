@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import DataTable from '../components/DataTable';
-import { fetchPostsRequest } from '../redux/posts/actions';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import DataTable from "../components/DataTable";
+import { fetchPostsRequest } from "../redux/posts/actions";
 
 export default function PostsPage() {
   const dispatch = useDispatch();
@@ -14,11 +14,6 @@ export default function PostsPage() {
   }, [dispatch]);
 
   return (
-    <DataTable
-      title="POSTS"
-      data={posts}
-      loading={loading}
-      error={error}
-    />
+    <DataTable title="POSTS" data={posts} loading={loading} error={error} />
   );
 }
