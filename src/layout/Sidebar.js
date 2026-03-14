@@ -13,6 +13,7 @@ import {
 import PeopleIcon from '@mui/icons-material/People';
 import ArticleIcon from '@mui/icons-material/Article';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import HubIcon from '@mui/icons-material/Hub';
 
 const SIDEBAR_WIDTH = 240;
 
@@ -20,6 +21,7 @@ const navItems = [
   { label: 'Users', path: '/users', icon: <PeopleIcon /> },
   { label: 'Posts', path: '/posts', icon: <ArticleIcon /> },
   { label: 'Todos', path: '/todos', icon: <CheckBoxIcon /> },
+  { label: 'Network', path: '/network', icon: <HubIcon /> },
 ];
 
 export default function Sidebar() {

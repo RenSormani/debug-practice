@@ -7,6 +7,7 @@ import MainLayout from './layout/MainLayout';
 import UsersPage from './pages/UsersPage';
 import PostsPage from './pages/PostsPage';
 import TodosPage from './pages/TodosPage';
+import NetworkPage from './pages/NetworkPage';
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
             <Route path="/users" element={<UsersPage />} />
             <Route path="/posts" element={<PostsPage />} />
             <Route path="/todos" element={<TodosPage />} />
+            <Route path="/network" element={<NetworkPage />} />
           </Routes>
         </MainLayout>
       </BrowserRouter>
