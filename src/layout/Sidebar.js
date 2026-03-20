@@ -15,6 +15,7 @@ import ArticleIcon from "@mui/icons-material/Article";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import HubIcon from "@mui/icons-material/Hub";
 import ExploreIcon from "@mui/icons-material/Explore";
+import RouterIcon from '@mui/icons-material/Router';
 
 const SIDEBAR_WIDTH = 240;
 
@@ -24,6 +25,7 @@ const navItems = [
   { label: "Todos", path: "/todos", icon: <CheckBoxIcon /> },
   { label: "Network", path: "/network", icon: <HubIcon /> },
   { label: "Explorer", path: "/explorer", icon: <ExploreIcon /> },
+  { label: 'Device Profile', path: '/device-profile', icon: <RouterIcon /> },
 ];
 
 export default function Sidebar() {

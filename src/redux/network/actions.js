@@ -15,3 +15,12 @@ export const fetchNetworkFailure = (error) => ({
   type: FETCH_NETWORK_FAILURE,
   payload: error,
 });
+
+
+//for servside
+// export const SEARCH_NETWORK_REQUEST = 'SEARCH_NETWORK_REQUEST';
+
+// export const searchNetworkRequest = (searchTerm) => ({
+//   type: SEARCH_NETWORK_REQUEST,
+//   payload: searchTerm,
+// });
