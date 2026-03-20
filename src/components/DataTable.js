@@ -6,7 +6,6 @@ import { formatCellValue } from "../utils/cellFormatters";
 export default function DataTable({ title, data, loading, error }) {
   const columns = useMemo(() => {
     if (!data || data.length === 0) return [];
-
     return Object.keys(data[0]).map((key) => ({
       accessorKey: key,
       header: key.charAt(0).toUpperCase() + key.slice(1),
@@ -53,47 +52,32 @@ export default function DataTable({ title, data, loading, error }) {
       </Typography>
       <MaterialReactTable
         columns={columns}
-        data={data}
+        data={data || []}
         enableSorting
         enableColumnFilters
         enablePagination
         enableGlobalFilter
+        globalFilterFn="contains"
+        initialState={{
+          showColumnFilters: true,
+        }}
         muiTableHeadCellProps={{
           sx: {
-            backgroundColor: "#7d7e80",
+            backgroundColor: "#16213E",
             color: "#ffffff",
             fontWeight: "bold",
             letterSpacing: 1,
-            "& .MuiIconButton-root": {
-              color: "#ffffff",
-            },
-            "& .MuiSvgIcon-root": {
-              color: "#ffffff",
-            },
-            "& .MuiTableSortLabel-root": {
-              color: "#ffffff",
-              "&:hover": {
-                color: "#ffffff",
-              },
-              "&.Mui-active": {
-                color: "#ffffff",
-              },
-            },
+            "& .MuiIconButton-root": { color: "#FF6B00" },
+            "& .MuiSvgIcon-root": { color: "#FF6B00" },
           },
         }}
         muiTableBodyRowProps={{
           hover: true,
           sx: {
-            "&:hover": {
-              backgroundColor: "#f5f5f5",
-            },
+            "&:hover": { backgroundColor: "#f5f5f5" },
           },
         }}
-        globalFilterFn="contains"
-        initialState={{
-          showColumnFilters: true,
-        }}
-      />{" "}
+      />
     </Box>
   );
 }

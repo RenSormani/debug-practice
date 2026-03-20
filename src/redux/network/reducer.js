@@ -2,7 +2,7 @@ import {
   FETCH_NETWORK_REQUEST,
   FETCH_NETWORK_SUCCESS,
   FETCH_NETWORK_FAILURE,
-} from './actions';
+} from "./actions";
 
 const initialState = {
   loading: false,
@@ -19,6 +19,10 @@ const networkReducer = (state = initialState, action) => {
         error: null,
       };
     case FETCH_NETWORK_SUCCESS:
+      console.log(
+        "FETCH_NETWORK_SUCCESS received, data length:",
+        action.payload.length,
+      );
       return {
         ...state,
         loading: false,
