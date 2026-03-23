@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -9,77 +9,110 @@ import {
   FormControl,
   InputLabel,
   Button,
-  Snackbar,
   IconButton,
   Tooltip,
-} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import DevicesIcon from "@mui/icons-material/Devices";
-import CloseIcon from "@mui/icons-material/Close";
-import { useLocation, useNavigate } from "react-router-dom";
-import OverviewPanel from "../components/OverViewPanel";
-import SummaryPanel from "../components/SummaryPanel";
-import SnapshotSection from "../components/SnapshotSection";
-import CollapsibleTable from "../components/CollapsibleTable ";
-import ConfigDrawer from "../components/configDrawer";
-import { deviceProfiles } from "../data/devicedata";
-import { formatAsConfig, formatAsJson } from "../utils/configFormatters";
+} from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import DevicesIcon from '@mui/icons-material/Devices';
+import CloseIcon from '@mui/icons-material/Close';
+import { useLocation, useNavigate } from 'react-router-dom';
+import SummaryPanel from '../components/SummaryPanel';
+import SnapshotSection from '../components/SnapshotSection';
+import DeviceTabBar from '../components/DeviceTabBar';
+import { formatAsConfig, formatAsJson } from '../utils/configFormatters';
+import { deviceProfiles } from '../data/devicedata';
+import OverviewPanel from '../components/OverViewPanel';
+import CollapsibleTable from '../components/CollapsibleTable ';
+import ConfigDrawer from '../components/configDrawer';
 
 export default function DeviceProfilePage() {
   const location = useLocation();
   const navigate = useNavigate();
   const tableRefs = useRef({});
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-
-  // Read device from URL on load
-  const params = new URLSearchParams(location.search);
-  const deviceIdFromUrl = params.get("device");
-  const [selectedDeviceId, setSelectedDeviceId] = useState(
-    deviceIdFromUrl || deviceProfiles[0].id,
-  );
-
   const [snackbarVisible, setSnackbarVisible] = useState(false);
 
-  // Sync URL when device changes
-  useEffect(() => {
-    navigate(`/device-profile?device=${selectedDeviceId}`, { replace: true });
-  }, [selectedDeviceId, navigate]);
+  // Tab state
+  const params = new URLSearchParams(location.search);
+  const deviceIdFromUrl = params.get('device');
 
-  const device = deviceProfiles.find((d) => d.id === selectedDeviceId);
+  const [tabs, setTabs] = useState(() => {
+    const initialId = deviceIdFromUrl || deviceProfiles[0].id;
+    const initialDevice = deviceProfiles.find((d) => d.id === initialId);
+    return initialDevice ? [{ id: initialId, hostname: initialDevice.identity.hostname }] : [];
+  });
 
-  const tableDefs = device
-    ? [
-        { title: "INTERFACES", icon: "🔌", data: device.interfaces },
-        { title: "HOSTS", icon: "💻", data: device.hosts },
-        { title: "USERS", icon: "👤", data: device.users },
-        { title: "VPNs", icon: "🔒", data: device.vpns },
-        { title: "ASNs", icon: "📡", data: device.asns },
-      ]
-    : [];
-
-  const [openTables, setOpenTables] = useState(() =>
-    tableDefs.reduce((acc, t) => ({ ...acc, [t.title]: false }), {}),
+  const [activeTabId, setActiveTabId] = useState(
+    deviceIdFromUrl || deviceProfiles[0].id
   );
 
-  const handleDeviceChange = (id) => {
-    setSelectedDeviceId(id);
+  const [openTables, setOpenTables] = useState(
+    ['INTERFACES', 'HOSTS', 'USERS', 'VPNs', 'ASNs'].reduce(
+      (acc, t) => ({ ...acc, [t]: false }), {}
+    )
+  );
+
+  // Sync URL when active tab changes
+  useEffect(() => {
+    if (activeTabId) {
+      navigate(`/device-profile?device=${activeTabId}`, { replace: true });
+    }
+  }, [activeTabId, navigate]);
+
+  const device = deviceProfiles.find((d) => d.id === activeTabId);
+
+  const tableDefs = device ? [
+    { title: 'INTERFACES', icon: '🔌', data: device.interfaces },
+    { title: 'HOSTS', icon: '💻', data: device.hosts },
+    { title: 'USERS', icon: '👤', data: device.users },
+    { title: 'VPNs', icon: '🔒', data: device.vpns },
+    { title: 'ASNs', icon: '📡', data: device.asns },
+  ] : [];
+
+  // Handle selecting a device — opens new tab if not already open
+  const handleDeviceSelect = (id) => {
+    const selectedDevice = deviceProfiles.find((d) => d.id === id);
+    if (!selectedDevice) return;
+
+    // If tab already exists, just switch to it
+    if (tabs.find((t) => t.id === id)) {
+      setActiveTabId(id);
+      return;
+    }
+
+    // Otherwise open a new tab
+    setTabs((prev) => [...prev, { id, hostname: selectedDevice.identity.hostname }]);
+    setActiveTabId(id);
     setOpenTables(
-      ["INTERFACES", "HOSTS", "USERS", "VPNs", "ASNs"].reduce(
-        (acc, t) => ({ ...acc, [t]: false }),
-        {},
-      ),
+      ['INTERFACES', 'HOSTS', 'USERS', 'VPNs', 'ASNs'].reduce(
+        (acc, t) => ({ ...acc, [t]: false }), {}
+      )
     );
+  };
+
+  // Handle closing a tab
+  const handleTabClose = (id) => {
+    const idx = tabs.findIndex((t) => t.id === id);
+    const newTabs = tabs.filter((t) => t.id !== id);
+    setTabs(newTabs);
+
+    if (activeTabId === id) {
+      if (newTabs.length === 0) {
+        setActiveTabId(null);
+      } else {
+        // Show previous tab
+        const newActiveIdx = Math.max(0, idx - 1);
+        setActiveTabId(newTabs[newActiveIdx].id);
+      }
+    }
   };
 
   const handleToggle = (title) => {
     setOpenTables((prev) => ({ ...prev, [title]: !prev[title] }));
     if (!openTables[title] && tableRefs.current[title]) {
       setTimeout(() => {
-        tableRefs.current[title].scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
+        tableRefs.current[title].scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 100);
     }
   };
@@ -89,14 +122,14 @@ export default function DeviceProfilePage() {
     const term = searchTerm.toLowerCase();
     return data.filter((row) =>
       Object.values(row).some((value) =>
-        String(value).toLowerCase().includes(term),
-      ),
+        String(value).toLowerCase().includes(term)
+      )
     );
   };
 
   const totalMatches = tableDefs.reduce(
     (acc, t) => acc + filterData(t.data).length,
-    0,
+    0
   );
 
   const summaryTables = tableDefs.map((t) => ({
@@ -105,23 +138,20 @@ export default function DeviceProfilePage() {
     count: t.data.length,
   }));
 
-  // Open Config in new tab
   const handleOpenConfig = () => {
     const config = formatAsConfig(device);
-    const blob = new Blob([config], { type: "text/plain" });
+    const blob = new Blob([config], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
-    window.open(url, "_blank");
+    window.open(url, '_blank');
   };
 
-  // Open JSON in new tab
   const handleOpenJson = () => {
     const json = formatAsJson(device);
-    const blob = new Blob([json], { type: "application/json" });
+    const blob = new Blob([json], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
-    window.open(url, "_blank");
+    window.open(url, '_blank');
   };
 
-  // Copy link to clipboard
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href);
     setSnackbarOpen(true);
@@ -133,232 +163,258 @@ export default function DeviceProfilePage() {
   };
 
   return (
-    <Box sx={{ display: "flex", height: "100vh", overflow: "hidden" }}>
+    <Box sx={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
       {/* Main Content */}
-      <Box sx={{ flex: 1, padding: 4, overflowY: "auto" }}>
-        {/* Page Header */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: 3,
-          }}
-        >
-          <Typography
-            variant="h4"
-            sx={{
-              fontWeight: "bold",
-              letterSpacing: 3,
-              color: "#1A1A2E",
-            }}
-          >
-            DEVICE PROFILE
-          </Typography>
+      <Box sx={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
 
-          {/* Device Selector */}
-          <FormControl sx={{ minWidth: 240 }}>
-            <InputLabel sx={{ color: "#1A1A2E" }}>Select Device</InputLabel>
-            <Select
-              value={selectedDeviceId}
-              label="Select Device"
-              onChange={(e) => handleDeviceChange(e.target.value)}
-              sx={{
-                backgroundColor: "#ffffff",
-                "& .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#1A1A2E",
-                },
-              }}
-            >
-              {deviceProfiles.map((d) => (
-                <MenuItem key={d.id} value={d.id}>
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    <DevicesIcon sx={{ fontSize: 16, color: "#FF6B00" }} />
-                    {d.identity.hostname}
-                  </Box>
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Box>
+        {/* Tab Bar */}
+        <DeviceTabBar
+          tabs={tabs}
+          activeTabId={activeTabId}
+          onTabClick={(id) => setActiveTabId(id)}
+          onTabClose={handleTabClose}
+        />
 
-        {/* Action Buttons */}
-        {device && (
+        <Box sx={{ flex: 1, padding: 4 }}>
+          {/* Page Header */}
           <Box
             sx={{
-              display: "flex",
-              justifyContent: "flex-end",
-              gap: 1,
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
               marginBottom: 2,
             }}
           >
-            <Tooltip title="Open raw config in a new tab" arrow>
-              <Button
-                variant="outlined"
-                size="small"
-                onClick={handleOpenConfig}
+            <Typography
+              variant="h4"
+              sx={{
+                fontWeight: 'bold',
+                letterSpacing: 3,
+                color: '#1A1A2E',
+              }}
+            >
+              DEVICE PROFILE
+            </Typography>
+
+            {/* Device Selector */}
+            <FormControl sx={{ minWidth: 240 }}>
+              <InputLabel sx={{ color: '#1A1A2E' }}>Select Device</InputLabel>
+              <Select
+                value=""
+                label="Select Device"
+                onChange={(e) => handleDeviceSelect(e.target.value)}
+                displayEmpty
                 sx={{
-                  borderColor: "#1A1A2E",
-                  color: "#1A1A2E",
-                  fontSize: "11px",
-                  letterSpacing: 1,
-                  fontWeight: "bold",
-                  "&:hover": {
-                    backgroundColor: "#1A1A2E",
-                    color: "#ffffff",
-                  },
+                  backgroundColor: '#ffffff',
+                  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#1A1A2E' },
                 }}
               >
-                OPEN CONFIG
-              </Button>
-            </Tooltip>
-            <Tooltip title="Open raw JSON in a new tab" arrow>
-              <Button
-                variant="outlined"
-                size="small"
-                onClick={handleOpenJson}
-                sx={{
-                  borderColor: "#1A1A2E",
-                  color: "#1A1A2E",
-                  fontSize: "11px",
-                  letterSpacing: 1,
-                  fontWeight: "bold",
-                  "&:hover": {
-                    backgroundColor: "#1A1A2E",
-                    color: "#ffffff",
-                  },
-                }}
-              >
-                OPEN JSON
-              </Button>
-            </Tooltip>
-            <Tooltip title="Copy link to this device profile" arrow>
-              <Button
-                variant="contained"
-                size="small"
-                onClick={handleCopyLink}
-                sx={{
-                  backgroundColor: "#FF6B00",
-                  color: "#ffffff",
-                  fontSize: "11px",
-                  letterSpacing: 1,
-                  fontWeight: "bold",
-                  "&:hover": {
-                    backgroundColor: "#e65f00",
-                  },
-                }}
-              >
-                COPY LINK
-              </Button>
-            </Tooltip>
+                {deviceProfiles.map((d) => (
+                  <MenuItem key={d.id} value={d.id}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <DevicesIcon sx={{ fontSize: 16, color: '#FF6B00' }} />
+                      {d.identity.hostname}
+                      {tabs.find((t) => t.id === d.id) && (
+                        <Typography sx={{ fontSize: '10px', color: '#FF6B00', ml: 1 }}>
+                          OPEN
+                        </Typography>
+                      )}
+                    </Box>
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Box>
-        )}
 
-        {device && (
-          <>
-            {/* Top section — Summary Panel + Overview Panels side by side */}
-            <Box sx={{ display: "flex", gap: 2, marginBottom: 2 }}>
-              {/* Left — Summary Panel */}
-              <SummaryPanel
-                tables={summaryTables}
-                openTables={openTables}
-                onToggle={handleToggle}
-              />
-
-              {/* Right — Overview Panels */}
-              <Box sx={{ flex: 1 }}>
-                <OverviewPanel
-                  title="IDENTITY"
-                  icon="🖥️"
-                  data={device.identity}
-                  collapsible={false}
-                />
-                <OverviewPanel
-                  title="PROVENANCE"
-                  icon="📋"
-                  data={device.provenance}
-                  collapsible={false}
-                />
-                <OverviewPanel
-                  title="TECHNICAL"
-                  icon="⚙️"
-                  data={device.technical}
-                  collapsible={true}
-                />
-              </Box>
+          {/* No tabs open */}
+          {!device && (
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: '50vh',
+                gap: 2,
+              }}
+            >
+              <Typography sx={{ color: '#888', fontSize: '16px', letterSpacing: 2 }}>
+                NO DEVICE SELECTED
+              </Typography>
+              <Typography sx={{ color: '#aaa', fontSize: '13px' }}>
+                Use the dropdown above to open a device profile
+              </Typography>
             </Box>
+          )}
 
-            {/* Snapshot Section */}
-            <SnapshotSection device={device} />
-
-            {/* Search Bar */}
-            <Box sx={{ marginBottom: 3 }}>
-              <TextField
-                fullWidth
-                placeholder="Search across all tables..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon sx={{ color: "#1A1A2E" }} />
-                    </InputAdornment>
-                  ),
-                  endAdornment: searchTerm && (
-                    <InputAdornment position="end">
-                      <Typography
-                        sx={{
-                          backgroundColor:
-                            totalMatches > 0 ? "#1A1A2E" : "#E63946",
-                          color: "#ffffff",
-                          fontSize: "11px",
-                          fontWeight: "bold",
-                          padding: "2px 8px",
-                          borderRadius: 1,
-                        }}
-                      >
-                        {totalMatches} results
-                      </Typography>
-                    </InputAdornment>
-                  ),
-                }}
+          {device && (
+            <>
+              {/* Action Buttons */}
+              <Box
                 sx={{
-                  "& .MuiOutlinedInput-root": {
-                    borderRadius: 2,
-                    backgroundColor: "#ffffff",
-                    "&:hover fieldset": { borderColor: "#1A1A2E" },
-                    "&.Mui-focused fieldset": { borderColor: "#1A1A2E" },
-                  },
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  gap: 1,
+                  marginBottom: 2,
                 }}
-              />
-            </Box>
+              >
+                <Tooltip title="Open raw config in a new tab" arrow>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    onClick={handleOpenConfig}
+                    sx={{
+                      borderColor: '#1A1A2E',
+                      color: '#1A1A2E',
+                      fontSize: '11px',
+                      letterSpacing: 1,
+                      fontWeight: 'bold',
+                      '&:hover': {
+                        backgroundColor: '#1A1A2E',
+                        color: '#ffffff',
+                      },
+                    }}
+                  >
+                    OPEN CONFIG
+                  </Button>
+                </Tooltip>
+                <Tooltip title="Open raw JSON in a new tab" arrow>
+                  <Button
+                    variant="outlined"
+                    size="small"
+                    onClick={handleOpenJson}
+                    sx={{
+                      borderColor: '#1A1A2E',
+                      color: '#1A1A2E',
+                      fontSize: '11px',
+                      letterSpacing: 1,
+                      fontWeight: 'bold',
+                      '&:hover': {
+                        backgroundColor: '#1A1A2E',
+                        color: '#ffffff',
+                      },
+                    }}
+                  >
+                    OPEN JSON
+                  </Button>
+                </Tooltip>
+                <Tooltip title="Copy link to this device profile" arrow>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    onClick={handleCopyLink}
+                    sx={{
+                      backgroundColor: '#FF6B00',
+                      color: '#ffffff',
+                      fontSize: '11px',
+                      letterSpacing: 1,
+                      fontWeight: 'bold',
+                      '&:hover': { backgroundColor: '#e65f00' },
+                    }}
+                  >
+                    COPY LINK
+                  </Button>
+                </Tooltip>
+              </Box>
 
-            {/* Tables */}
-            {tableDefs.map((table) => {
-              const filteredData = filterData(table.data);
-              return (
-                <Box
-                  key={table.title}
-                  ref={(el) => (tableRefs.current[table.title] = el)}
-                >
-                  <CollapsibleTable
-                    title={table.title}
-                    icon={table.icon}
-                    data={[...filteredData]}
-                    searchTerm={searchTerm}
-                    totalCount={table.data.length}
-                    expanded={openTables[table.title]}
-                    onToggle={() => handleToggle(table.title)}
+              {/* Top section — Summary Panel + Overview Panels */}
+              <Box sx={{ display: 'flex', gap: 2, marginBottom: 2 }}>
+                <SummaryPanel
+                  tables={summaryTables}
+                  openTables={openTables}
+                  onToggle={handleToggle}
+                />
+                <Box sx={{ flex: 1 }}>
+                  <OverviewPanel
+                    title="IDENTITY"
+                    data={device.identity}
+                    collapsible={false}
+                  />
+                  <OverviewPanel
+                    title="PROVENANCE"
+                    data={device.provenance}
+                    collapsible={false}
+                  />
+                  <OverviewPanel
+                    title="TECHNICAL"
+                    data={device.technical}
+                    collapsible={true}
                   />
                 </Box>
-              );
-            })}
-          </>
-        )}
+              </Box>
+
+              {/* Snapshot Section */}
+              <SnapshotSection device={device} />
+
+              {/* Search Bar */}
+              <Box sx={{ marginBottom: 3 }}>
+                <TextField
+                  fullWidth
+                  placeholder="Search across all tables..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchIcon sx={{ color: '#1A1A2E' }} />
+                      </InputAdornment>
+                    ),
+                    endAdornment: searchTerm && (
+                      <InputAdornment position="end">
+                        <Typography
+                          sx={{
+                            backgroundColor: totalMatches > 0 ? '#1A1A2E' : '#E63946',
+                            color: '#ffffff',
+                            fontSize: '11px',
+                            fontWeight: 'bold',
+                            padding: '2px 8px',
+                            borderRadius: 1,
+                          }}
+                        >
+                          {totalMatches} results
+                        </Typography>
+                      </InputAdornment>
+                    ),
+                  }}
+                  sx={{
+                    '& .MuiOutlinedInput-root': {
+                      borderRadius: 2,
+                      backgroundColor: '#ffffff',
+                      '&:hover fieldset': { borderColor: '#1A1A2E' },
+                      '&.Mui-focused fieldset': { borderColor: '#1A1A2E' },
+                    },
+                  }}
+                />
+              </Box>
+
+              {/* Tables */}
+              {tableDefs.map((table) => {
+                const filteredData = filterData(table.data);
+                return (
+                  <Box
+                    key={table.title}
+                    ref={(el) => (tableRefs.current[table.title] = el)}
+                  >
+                    <CollapsibleTable
+                      title={table.title}
+                      icon={table.icon}
+                      data={[...filteredData]}
+                      searchTerm={searchTerm}
+                      totalCount={table.data.length}
+                      expanded={openTables[table.title]}
+                      onToggle={() => handleToggle(table.title)}
+                    />
+                  </Box>
+                );
+              })}
+            </>
+          )}
+        </Box>
       </Box>
 
       {/* Config Drawer */}
       <ConfigDrawer device={device} />
+
       {/* Custom Snackbar */}
       {snackbarOpen && (
         <Box
@@ -368,7 +424,7 @@ export default function DeviceProfilePage() {
             right: snackbarVisible ? '33%' : '-400px',
             zIndex: 9999,
             transition: 'right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
-            backgroundColor: '#2c2c4e',
+            backgroundColor: '#1A1A2E',
             color: '#ffffff',
             borderRadius: 2,
             padding: '10px 16px',
