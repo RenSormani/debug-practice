@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, Typography, Chip } from '@mui/material';
 
 export default function SnapshotCard({ title, icon, rows, expandable = false, expandedData = [] }) {
@@ -19,7 +19,7 @@ export default function SnapshotCard({ title, icon, rows, expandable = false, ex
       {/* Card Header */}
       <Box
         sx={{
-          backgroundColor: '#16213E',
+          backgroundColor: '#17301E',
           padding: '10px 14px',
           display: 'flex',
           alignItems: 'center',
@@ -41,8 +41,8 @@ export default function SnapshotCard({ title, icon, rows, expandable = false, ex
           label={rows.length}
           size="small"
           sx={{
-            backgroundColor: '#FF6B00',
-            color: '#1A1A2E',
+            backgroundColor: '#546E7A',
+            color: '#ffffff',
             fontWeight: 'bold',
             fontSize: '10px',
             height: 18,
@@ -73,13 +73,13 @@ export default function SnapshotCard({ title, icon, rows, expandable = false, ex
                 '&:hover': {
                   backgroundColor: '#f5f5f5',
                 },
-                '&:focus-visible': expandable ? { outline: '2px solid #FF6B00', outlineOffset: '-2px' } : undefined,
+                '&:focus-visible': expandable ? { outline: '2px solid #546E7A', outlineOffset: '-2px' } : undefined,
               }}
             >
               <Typography
                 sx={{
                   fontSize: '12px',
-                  color: '#1A1A2E',
+                  color: '#1E3D2F',
                   fontWeight: '500',
                   flex: 1,
                 }}
@@ -100,7 +100,7 @@ export default function SnapshotCard({ title, icon, rows, expandable = false, ex
                           ? '#4CAF5020'
                           : row.badge === 'Inactive' || row.badge === 'Down' || row.badge === 'Disabled'
                           ? '#E6394620'
-                          : '#FF6B0020',
+                          : '#546E7A20',
                       color:
                         row.badge === 'Active' || row.badge === 'Up' || row.badge === 'Enabled'
                           ? '#337736'
@@ -111,7 +111,7 @@ export default function SnapshotCard({ title, icon, rows, expandable = false, ex
                   />
                 )}
                 {expandable && (
-                  <Typography aria-hidden="true" sx={{ color: '#FF6B00', fontSize: '12px' }}>
+                  <Typography aria-hidden="true" sx={{ color: '#546E7A', fontSize: '12px' }}>
                     {expandedRow === i ? '▲' : '▼'}
                   </Typography>
                 )}

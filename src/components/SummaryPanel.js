@@ -20,7 +20,7 @@ export default function SummaryPanel({ tables, openTables, onToggle }) {
       {/* Header */}
       <Box
         sx={{
-          backgroundColor: "#1A1A2E",
+          backgroundColor: "#1E3D2F",
           padding: "12px 16px",
         }}
       >
@@ -53,17 +53,17 @@ export default function SummaryPanel({ tables, openTables, onToggle }) {
               justifyContent: "space-between",
               padding: "23px 14px",
               cursor: "pointer",
-              backgroundColor: isOpen ? "#FF6B0015" : "#ffffff",
+              backgroundColor: isOpen ? "#546E7A15" : "#ffffff",
               borderLeft: isOpen
-                ? "3px solid #FF6B00"
+                ? "3px solid #546E7A"
                 : "3px solid transparent",
               borderBottom: "1px solid #f0f0f0",
               transition: "all 0.15s ease",
               "&:hover": {
-                backgroundColor: isOpen ? "#FF6B0020" : "#f5f5f5",
+                backgroundColor: isOpen ? "#546E7A20" : "#f5f5f5",
               },
               "&:focus-visible": {
-                outline: "2px solid #FF6B00",
+                outline: "2px solid #546E7A",
                 outlineOffset: "-2px",
               },
             }}
@@ -74,7 +74,7 @@ export default function SummaryPanel({ tables, openTables, onToggle }) {
                 sx={{
                   fontSize: "12px",
                   fontWeight: isOpen ? "bold" : "normal",
-                  color: isOpen ? "#FF6B00" : "#1A1A2E",
+                  color: isOpen ? "#546E7A" : "#1E3D2F",
                   letterSpacing: 0.5,
                 }}
               >
@@ -83,7 +83,7 @@ export default function SummaryPanel({ tables, openTables, onToggle }) {
             </Box>
             <Box
               sx={{
-                backgroundColor: isOpen ? "#FF6B00" : "#e0e0e0",
+                backgroundColor: isOpen ? "#546E7A" : "#e0e0e0",
                 borderRadius: 10,
                 minWidth: 24,
                 height: 20,
@@ -97,7 +97,7 @@ export default function SummaryPanel({ tables, openTables, onToggle }) {
                 sx={{
                   fontSize: "10px",
                   fontWeight: "bold",
-                  color: isOpen ? "#1A1A2E" : "#555555",
+                  color: isOpen ? "#ffffff" : "#555555",
                 }}
               >
                 {table.count}

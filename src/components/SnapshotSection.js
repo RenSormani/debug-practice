@@ -53,12 +53,12 @@ export default function SnapshotSection({ device }) {
           alignItems: 'center',
           marginBottom: 2,
           paddingBottom: 1,
-          borderBottom: '2px solid #1A1A2E',
+          borderBottom: '2px solid #1E3D2F',
         }}
       >
         <Typography
           sx={{
-            color: '#1A1A2E',
+            color: '#1E3D2F',
             fontWeight: 'bold',
             fontSize: '12px',
             letterSpacing: 3,

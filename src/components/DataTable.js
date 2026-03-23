@@ -24,7 +24,7 @@ export default function DataTable({ title, data, loading, error }) {
         alignItems="center"
         height="400px"
       >
-        <CircularProgress sx={{ color: "#1A1A2E" }} aria-label="Loading data" role="status" />
+        <CircularProgress sx={{ color: "#1E3D2F" }} aria-label="Loading data" role="status" />
       </Box>
     );
   }
@@ -45,7 +45,7 @@ export default function DataTable({ title, data, loading, error }) {
           fontWeight: "bold",
           letterSpacing: 3,
           marginBottom: 3,
-          color: "#1A1A2E",
+          color: "#1E3D2F",
         }}
       >
         {title}
@@ -63,12 +63,12 @@ export default function DataTable({ title, data, loading, error }) {
         }}
         muiTableHeadCellProps={{
           sx: {
-            backgroundColor: "#16213E",
+            backgroundColor: "#17301E",
             color: "#ffffff",
             fontWeight: "bold",
             letterSpacing: 1,
-            "& .MuiIconButton-root": { color: "#FF6B00" },
-            "& .MuiSvgIcon-root": { color: "#FF6B00" },
+            "& .MuiIconButton-root": { color: "#546E7A" },
+            "& .MuiSvgIcon-root": { color: "#546E7A" },
           },
         }}
         muiTableBodyRowProps={{

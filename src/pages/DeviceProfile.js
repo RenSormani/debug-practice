@@ -190,7 +190,7 @@ export default function DeviceProfilePage() {
               sx={{
                 fontWeight: 'bold',
                 letterSpacing: 3,
-                color: '#1A1A2E',
+                color: '#1E3D2F',
               }}
             >
               DEVICE PROFILE
@@ -198,7 +198,7 @@ export default function DeviceProfilePage() {
 
             {/* Device Selector */}
             <FormControl sx={{ minWidth: 240 }}>
-              <InputLabel id="device-select-label" sx={{ color: '#1A1A2E' }}>Select Device</InputLabel>
+              <InputLabel id="device-select-label" sx={{ color: '#1E3D2F' }}>Select Device</InputLabel>
               <Select
                 labelId="device-select-label"
                 value=""
@@ -208,16 +208,16 @@ export default function DeviceProfilePage() {
                 displayEmpty
                 sx={{
                   backgroundColor: '#ffffff',
-                  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#1A1A2E' },
+                  '& .MuiOutlinedInput-notchedOutline': { borderColor: '#1E3D2F' },
                 }}
               >
                 {deviceProfiles.map((d) => (
                   <MenuItem key={d.id} value={d.id}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <DevicesIcon aria-hidden="true" sx={{ fontSize: 16, color: '#FF6B00' }} />
+                      <DevicesIcon aria-hidden="true" sx={{ fontSize: 16, color: '#546E7A' }} />
                       {d.identity.hostname}
                       {tabs.find((t) => t.id === d.id) && (
-                        <Typography sx={{ fontSize: '10px', color: '#FF6B00', ml: 1 }}>
+                        <Typography sx={{ fontSize: '10px', color: '#546E7A', ml: 1 }}>
                           OPEN
                         </Typography>
                       )}
@@ -266,13 +266,13 @@ export default function DeviceProfilePage() {
                     size="small"
                     onClick={handleOpenConfig}
                     sx={{
-                      borderColor: '#1A1A2E',
-                      color: '#1A1A2E',
+                      borderColor: '#1E3D2F',
+                      color: '#1E3D2F',
                       fontSize: '11px',
                       letterSpacing: 1,
                       fontWeight: 'bold',
                       '&:hover': {
-                        backgroundColor: '#1A1A2E',
+                        backgroundColor: '#1E3D2F',
                         color: '#ffffff',
                       },
                     }}
@@ -286,13 +286,13 @@ export default function DeviceProfilePage() {
                     size="small"
                     onClick={handleOpenJson}
                     sx={{
-                      borderColor: '#1A1A2E',
-                      color: '#1A1A2E',
+                      borderColor: '#1E3D2F',
+                      color: '#1E3D2F',
                       fontSize: '11px',
                       letterSpacing: 1,
                       fontWeight: 'bold',
                       '&:hover': {
-                        backgroundColor: '#1A1A2E',
+                        backgroundColor: '#1E3D2F',
                         color: '#ffffff',
                       },
                     }}
@@ -306,12 +306,12 @@ export default function DeviceProfilePage() {
                     size="small"
                     onClick={handleCopyLink}
                     sx={{
-                      backgroundColor: '#FF6B00',
+                      backgroundColor: '#546E7A',
                       color: '#ffffff',
                       fontSize: '11px',
                       letterSpacing: 1,
                       fontWeight: 'bold',
-                      '&:hover': { backgroundColor: '#e65f00' },
+                      '&:hover': { backgroundColor: '#455A64' },
                     }}
                   >
                     COPY LINK
@@ -359,7 +359,7 @@ export default function DeviceProfilePage() {
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <SearchIcon aria-hidden="true" sx={{ color: '#1A1A2E' }} />
+                        <SearchIcon aria-hidden="true" sx={{ color: '#1E3D2F' }} />
                       </InputAdornment>
                     ),
                     endAdornment: searchTerm && (
@@ -368,7 +368,7 @@ export default function DeviceProfilePage() {
                           aria-live="polite"
                           aria-atomic="true"
                           sx={{
-                            backgroundColor: totalMatches > 0 ? '#1A1A2E' : '#E63946',
+                            backgroundColor: totalMatches > 0 ? '#1E3D2F' : '#E63946',
                             color: '#ffffff',
                             fontSize: '11px',
                             fontWeight: 'bold',
@@ -385,8 +385,8 @@ export default function DeviceProfilePage() {
                     '& .MuiOutlinedInput-root': {
                       borderRadius: 2,
                       backgroundColor: '#ffffff',
-                      '&:hover fieldset': { borderColor: '#1A1A2E' },
-                      '&.Mui-focused fieldset': { borderColor: '#1A1A2E' },
+                      '&:hover fieldset': { borderColor: '#1E3D2F' },
+                      '&.Mui-focused fieldset': { borderColor: '#1E3D2F' },
                     },
                   }}
                 />
@@ -432,7 +432,7 @@ export default function DeviceProfilePage() {
             right: snackbarVisible ? '33%' : '-400px',
             zIndex: 9999,
             transition: 'right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)',
-            backgroundColor: '#1A1A2E',
+            backgroundColor: '#1E3D2F',
             color: '#ffffff',
             borderRadius: 2,
             padding: '10px 16px',
@@ -440,7 +440,7 @@ export default function DeviceProfilePage() {
             alignItems: 'center',
             gap: 2,
             boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
-            borderLeft: '4px solid #FF6B00',
+            borderLeft: '4px solid #546E7A',
             minWidth: 260,
           }}
         >

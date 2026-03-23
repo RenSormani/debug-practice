@@ -31,9 +31,9 @@ export default function OverviewPanel({
           alignItems: "center",
           justifyContent: "space-between",
           padding: "12px 16px",
-          backgroundColor: "#1A1A2E",
+          backgroundColor: "#1E3D2F",
           cursor: collapsible ? "pointer" : "default",
-          '&:focus-visible': collapsible ? { outline: '2px solid #FF6B00', outlineOffset: '-2px' } : undefined,
+          '&:focus-visible': collapsible ? { outline: '2px solid #546E7A', outlineOffset: '-2px' } : undefined,
         }}
         onClick={() => collapsible && setExpanded(!expanded)}
         onKeyDown={(e) => { if (collapsible && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); setExpanded(!expanded); } }}
@@ -75,7 +75,7 @@ export default function OverviewPanel({
                       padding: "6px 10px",
                       backgroundColor: "#f8f9fa",
                       borderRadius: 1,
-                      borderLeft: "3px solid #FF6B00",
+                      borderLeft: "3px solid #546E7A",
                     }}
                   >
                     <Typography
@@ -92,7 +92,7 @@ export default function OverviewPanel({
                     </Typography>
                     <Typography
                       sx={{
-                        color: "#1A1A2E",
+                        color: "#1E3D2F",
                         fontSize: "12px",
                         fontWeight: "bold",
                         letterSpacing: 0.5,

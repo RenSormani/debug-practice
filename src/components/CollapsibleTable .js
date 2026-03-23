@@ -35,9 +35,9 @@ export default function CollapsibleTable({
           alignItems: 'center',
           justifyContent: 'space-between',
           padding: '12px 16px',
-          backgroundColor: '#1A1A2E',
+          backgroundColor: '#1E3D2F',
           cursor: 'pointer',
-          '&:focus-visible': { outline: '2px solid #FF6B00', outlineOffset: '-2px' },
+          '&:focus-visible': { outline: '2px solid #546E7A', outlineOffset: '-2px' },
         }}
         onClick={onToggle}
         onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onToggle && onToggle(); } }}
@@ -64,9 +64,9 @@ export default function CollapsibleTable({
                 isFiltered && !hasResults
                   ? '#E63946'
                   : isFiltered
-                  ? '#FF6B00'
+                  ? '#546E7A'
                   : '#ffffff20',
-              color: isFiltered && !hasResults ? '#ffffff' : isFiltered ? '#1A1A2E' : '#ffffff',
+              color: '#ffffff',
               fontWeight: 'bold',
               fontSize: '11px',
             }}

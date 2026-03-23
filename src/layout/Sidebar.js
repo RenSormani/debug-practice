@@ -39,7 +39,7 @@ export default function Sidebar() {
       sx={{
         width: SIDEBAR_WIDTH,
         minHeight: "100vh",
-        backgroundColor: "#1A1A2E",
+        backgroundColor: "#1E3D2F",
         display: "flex",
         flexDirection: "column",
         position: "fixed",
@@ -53,7 +53,7 @@ export default function Sidebar() {
         <Typography
           variant="h6"
           sx={{
-            color: "#FF6B00",
+            color: "#546E7A",
             fontWeight: "bold",
             letterSpacing: 4,
           }}
@@ -86,9 +86,9 @@ export default function Sidebar() {
                 aria-current={isActive ? "page" : undefined}
                 sx={{
                   borderRadius: 2,
-                  backgroundColor: isActive ? "#FF6B00" : "transparent",
+                  backgroundColor: isActive ? "#546E7A" : "transparent",
                   "&:hover": {
-                    backgroundColor: isActive ? "#FF6B00" : "#ffffff15",
+                    backgroundColor: isActive ? "#546E7A" : "#ffffff15",
                   },
                 }}
               >

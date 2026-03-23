@@ -34,14 +34,14 @@ export default function ConfigDrawer({ device }) {
         sx={{
           width: 48,
           minWidth: 48,
-          backgroundColor: "#1A1A2E",
+          backgroundColor: "#1E3D2F",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           paddingTop: 1,
-          borderLeft: "2px solid #FF6B00",
+          borderLeft: "2px solid #546E7A",
           "&:hover": {
-            backgroundColor: "#16213E",
+            backgroundColor: "#17301E",
           },
         }}
       >
@@ -56,7 +56,7 @@ export default function ConfigDrawer({ device }) {
             aria-label={open ? "Close file contents drawer" : "Open file contents drawer"}
             onClick={() => setOpen(!open)}
             onKeyDown={(e) => { if (e.key === 'Escape' && open) setOpen(false); }}
-            sx={{ color: "#FF6B00", padding: 0.5 }}
+            sx={{ color: "#546E7A", padding: 0.5 }}
           >
             {open ? (
               <KeyboardDoubleArrowRightIcon aria-hidden="true" sx={{ fontSize: 40 }} />
@@ -87,7 +87,7 @@ export default function ConfigDrawer({ device }) {
               alignItems: "center",
               justifyContent: "space-between",
               padding: "10px 14px",
-              backgroundColor: "#1A1A2E",
+              backgroundColor: "#1E3D2F",
               borderBottom: "1px solid #333",
               flexShrink: 0,
             }}
@@ -113,14 +113,14 @@ export default function ConfigDrawer({ device }) {
               <ToggleButton
                 value="config"
                 sx={{
-                  color: mode === "config" ? "#FF6B00" : "#888888",
+                  color: mode === "config" ? "#546E7A" : "#888888",
                   borderColor: "#333",
                   fontSize: "10px",
                   padding: "2px 8px",
                   "&.Mui-selected": {
-                    backgroundColor: "#FF6B0020",
-                    color: "#FF6B00",
-                    borderColor: "#FF6B00",
+                    backgroundColor: "#546E7A20",
+                    color: "#546E7A",
+                    borderColor: "#546E7A",
                   },
                 }}
               >
@@ -129,14 +129,14 @@ export default function ConfigDrawer({ device }) {
               <ToggleButton
                 value="json"
                 sx={{
-                  color: mode === "json" ? "#FF6B00" : "#888888",
+                  color: mode === "json" ? "#546E7A" : "#888888",
                   borderColor: "#333",
                   fontSize: "10px",
                   padding: "2px 8px",
                   "&.Mui-selected": {
-                    backgroundColor: "#FF6B0020",
-                    color: "#FF6B00",
-                    borderColor: "#FF6B00",
+                    backgroundColor: "#546E7A20",
+                    color: "#546E7A",
+                    borderColor: "#546E7A",
                   },
                 }}
               >

@@ -22,7 +22,7 @@ export default function NetworkPage() {
   if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="400px">
-        <CircularProgress sx={{ color: '#1A1A2E' }} aria-label="Loading network data" role="status" />
+        <CircularProgress sx={{ color: '#1E3D2F' }} aria-label="Loading network data" role="status" />
       </Box>
     );
   }
@@ -51,7 +51,7 @@ export default function NetworkPage() {
           sx={{
             fontWeight: 'bold',
             letterSpacing: 3,
-            color: '#1A1A2E',
+            color: '#1E3D2F',
           }}
         >
           NETWORK
@@ -65,11 +65,11 @@ export default function NetworkPage() {
             aria-pressed={view === 'table'}
             onClick={() => setView('table')}
             sx={{
-              backgroundColor: view === 'table' ? '#1A1A2E' : 'transparent',
-              borderColor: '#1A1A2E',
-              color: view === 'table' ? '#ffffff' : '#1A1A2E',
+              backgroundColor: view === 'table' ? '#1E3D2F' : 'transparent',
+              borderColor: '#1E3D2F',
+              color: view === 'table' ? '#ffffff' : '#1E3D2F',
               '&:hover': {
-                backgroundColor: view === 'table' ? '#16213E' : '#1A1A2E20',
+                backgroundColor: view === 'table' ? '#17301E' : '#1E3D2F20',
               },
             }}
           >
@@ -81,11 +81,11 @@ export default function NetworkPage() {
             aria-pressed={view === 'graph'}
             onClick={() => setView('graph')}
             sx={{
-              backgroundColor: view === 'graph' ? '#FF6B00' : 'transparent',
-              borderColor: '#FF6B00',
-              color: view === 'graph' ? '#ffffff' : '#FF6B00',
+              backgroundColor: view === 'graph' ? '#546E7A' : 'transparent',
+              borderColor: '#546E7A',
+              color: view === 'graph' ? '#ffffff' : '#546E7A',
               '&:hover': {
-                backgroundColor: view === 'graph' ? '#e65f00' : '#FF6B0020',
+                backgroundColor: view === 'graph' ? '#455A64' : '#546E7A20',
               },
             }}
           >

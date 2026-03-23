@@ -49,7 +49,7 @@ export default function ExplorerTable({
           alignItems: "center",
           justifyContent: "space-between",
           padding: "12px 16px",
-          backgroundColor: "#1A1A2E",
+          backgroundColor: "#1E3D2F",
           cursor: "pointer",
         }}
         onClick={() => setExpanded(!expanded)}
@@ -76,7 +76,7 @@ export default function ExplorerTable({
                 isFiltered && !hasResults
                   ? "#E63946"
                   : isFiltered
-                  ? "#FF6B00"
+                  ? "#546E7A"
                   : "#ffffff20",
               color: "#ffffff",
               fontWeight: "bold",
@@ -98,7 +98,7 @@ export default function ExplorerTable({
             alignItems="center"
             height="100px"
           >
-            <CircularProgress size={24} sx={{ color: "#1A1A2E" }} />
+            <CircularProgress size={24} sx={{ color: "#1E3D2F" }} />
           </Box>
         ) : !isReady ? (
           <Box
@@ -125,11 +125,11 @@ export default function ExplorerTable({
             }}
             muiTableHeadCellProps={{
               sx: {
-                backgroundColor: "#16213E",
+                backgroundColor: "#17301E",
                 color: "#ffffff",
                 fontWeight: "bold",
-                "& .MuiIconButton-root": { color: "#FF6B00" },
-                "& .MuiSvgIcon-root": { color: "#FF6B00" },
+                "& .MuiIconButton-root": { color: "#546E7A" },
+                "& .MuiSvgIcon-root": { color: "#546E7A" },
               },
             }}
             muiTableBodyRowProps={{

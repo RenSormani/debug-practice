@@ -198,7 +198,7 @@ export default function NetworkGraph({ data }) {
     {
       selector: 'node[type = "country"]',
       style: {
-        'background-color': '#1A1A2E',
+        'background-color': '#1E3D2F',
         label: 'data(label)',
         color: '#ffffff',
         'font-size': '14px',
@@ -214,7 +214,7 @@ export default function NetworkGraph({ data }) {
     {
       selector: 'node[type = "city"]',
       style: {
-        'background-color': '#16213E',
+        'background-color': '#17301E',
         label: 'data(label)',
         color: '#ffffff',
         'font-size': '12px',
@@ -229,7 +229,7 @@ export default function NetworkGraph({ data }) {
     {
       selector: 'node[type = "asn"]',
       style: {
-        'background-color': '#FF6B00',
+        'background-color': '#546E7A',
         label: 'data(label)',
         color: '#ffffff',
         'font-size': '10px',
@@ -285,14 +285,14 @@ export default function NetworkGraph({ data }) {
       selector: 'node:selected',
       style: {
         'border-width': 3,
-        'border-color': '#FF6B00',
+        'border-color': '#546E7A',
       },
     },
     {
       selector: 'edge:selected',
       style: {
-        'line-color': '#FF6B00',
-        'target-arrow-color': '#FF6B00',
+        'line-color': '#546E7A',
+        'target-arrow-color': '#546E7A',
         width: 3,
       },
     },
@@ -320,9 +320,9 @@ export default function NetworkGraph({ data }) {
           flexWrap: 'wrap',
         }}
       >
-        <LegendItem color="#1A1A2E" label="Country" />
-        <LegendItem color="#16213E" label="City" />
-        <LegendItem color="#FF6B00" label="ASN" />
+        <LegendItem color="#1E3D2F" label="Country" />
+        <LegendItem color="#17301E" label="City" />
+        <LegendItem color="#546E7A" label="ASN" />
         <LegendItem color="#4CAF50" label="Active IP" />
         <LegendItem color="#E63946" label="Inactive IP" />
       </Box>
@@ -400,7 +400,7 @@ export default function NetworkGraph({ data }) {
           {/* Panel Header */}
           <Box
             sx={{
-              backgroundColor: '#1A1A2E',
+              backgroundColor: '#1E3D2F',
               padding: '8px 12px',
               display: 'flex',
               justifyContent: 'space-between',
@@ -430,14 +430,14 @@ export default function NetworkGraph({ data }) {
           {/* Panel Table */}
           <Table size="small">
             <TableHead>
-              <TableRow sx={{ backgroundColor: '#16213E' }}>
+              <TableRow sx={{ backgroundColor: '#17301E' }}>
                 {panel.columns.map((col) => (
                   <TableCell
                     key={col}
                     component="th"
                     scope="col"
                     sx={{
-                      color: '#FF6B00',
+                      color: '#546E7A',
                       fontWeight: 'bold',
                       fontSize: '11px',
                       letterSpacing: 1,

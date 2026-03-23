@@ -15,7 +15,7 @@ export default function MainLayout({ children }) {
           top: '-48px',
           left: 8,
           zIndex: 10000,
-          backgroundColor: '#FF6B00',
+          backgroundColor: '#546E7A',
           color: '#ffffff',
           padding: '8px 16px',
           borderRadius: 1,

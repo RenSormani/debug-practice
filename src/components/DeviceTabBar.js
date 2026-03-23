@@ -18,13 +18,13 @@ export default function DeviceTabBar({
       sx={{
         display: "flex",
         alignItems: "center",
-        backgroundColor: "#1A1A2E",
-        borderBottom: "2px solid #FF6B00",
+        backgroundColor: "#1E3D2F",
+        borderBottom: "2px solid #546E7A",
         overflowX: "auto",
         minHeight: 42,
         flexShrink: 0,
         "&::-webkit-scrollbar": { height: "3px" },
-        "&::-webkit-scrollbar-thumb": { backgroundColor: "#FF6B00" },
+        "&::-webkit-scrollbar-thumb": { backgroundColor: "#546E7A" },
       }}
     >
       {tabs.map((tab) => {
@@ -56,16 +56,16 @@ export default function DeviceTabBar({
               padding: "8px 14px",
               cursor: "pointer",
               borderRight: "1px solid #2a2a2a",
-              backgroundColor: isActive ? "#FF6B0020" : "transparent",
-              borderBottom: isActive ? "2px solid #FF6B00" : "2px solid transparent",
+              backgroundColor: isActive ? "#546E7A20" : "transparent",
+              borderBottom: isActive ? "2px solid #546E7A" : "2px solid transparent",
               minWidth: "fit-content",
               height: "100%",
               transition: "all 0.15s ease",
-              "&:hover": { backgroundColor: isActive ? "#FF6B0030" : "#ffffff10" },
-              "&:focus-visible": { outline: "2px solid #FF6B00", outlineOffset: "-2px" },
+              "&:hover": { backgroundColor: isActive ? "#546E7A30" : "#ffffff10" },
+              "&:focus-visible": { outline: "2px solid #546E7A", outlineOffset: "-2px" },
             }}
           >
-            <RouterIcon aria-hidden="true" sx={{ fontSize: 14, color: isActive ? "#FF6B00" : "#888888" }} />
+            <RouterIcon aria-hidden="true" sx={{ fontSize: 14, color: isActive ? "#546E7A" : "#888888" }} />
             <Typography
               sx={{
                 fontSize: "12px",

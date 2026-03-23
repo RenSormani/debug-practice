@@ -133,7 +133,7 @@ export default function ExplorerPage() {
         sx={{
           fontWeight: "bold",
           letterSpacing: 3,
-          color: "#1A1A2E",
+          color: "#1E3D2F",
           marginBottom: 3,
         }}
       >
@@ -151,7 +151,7 @@ export default function ExplorerPage() {
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon aria-hidden="true" sx={{ color: "#1A1A2E" }} />
+                <SearchIcon aria-hidden="true" sx={{ color: "#1E3D2F" }} />
               </InputAdornment>
             ),
             endAdornment: searchTerm && (
@@ -160,7 +160,7 @@ export default function ExplorerPage() {
                   label={`${totalMatches} results`}
                   size="small"
                   sx={{
-                    backgroundColor: totalMatches > 0 ? "#1A1A2E" : "#E63946",
+                    backgroundColor: totalMatches > 0 ? "#1E3D2F" : "#E63946",
                     color: "#ffffff",
                     fontWeight: "bold",
                   }}
@@ -172,8 +172,8 @@ export default function ExplorerPage() {
             "& .MuiOutlinedInput-root": {
               borderRadius: 2,
               backgroundColor: "#ffffff",
-              "&:hover fieldset": { borderColor: "#1A1A2E" },
-              "&.Mui-focused fieldset": { borderColor: "#1A1A2E" },
+              "&:hover fieldset": { borderColor: "#1E3D2F" },
+              "&.Mui-focused fieldset": { borderColor: "#1E3D2F" },
             },
           }}
         />
@@ -182,7 +182,7 @@ export default function ExplorerPage() {
       {/* Tables */}
       {localData.length === 0 ? (
         <Box display="flex" justifyContent="center" alignItems="center" height="200px">
-          <CircularProgress sx={{ color: '#1A1A2E' }} aria-label="Loading data" role="status" />
+          <CircularProgress sx={{ color: '#1E3D2F' }} aria-label="Loading data" role="status" />
         </Box>
       ) : (
         tables.map((table) => {
