@@ -103,10 +103,10 @@ export default function SnapshotCard({ title, icon, rows, expandable = false, ex
                           : '#FF6B0020',
                       color:
                         row.badge === 'Active' || row.badge === 'Up' || row.badge === 'Enabled'
-                          ? '#4CAF50'
+                          ? '#337736'
                           : row.badge === 'Inactive' || row.badge === 'Down' || row.badge === 'Disabled'
-                          ? '#E63946'
-                          : '#FF6B00',
+                          ? '#c4303a'
+                          : '#af4800',
                     }}
                   />
                 )}

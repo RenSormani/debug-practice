@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, IconButton, Grid } from "@mui/material";
+import { Box, Typography, Grid } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 
@@ -52,14 +52,9 @@ export default function OverviewPanel({
           </Typography>
         </Box>
         {collapsible && (
-          <IconButton
-            size="small"
-            tabIndex={-1}
-            aria-label={expanded ? `Collapse ${title} panel` : `Expand ${title} panel`}
-            sx={{ color: "#ffffff" }}
-          >
+          <span aria-hidden="true" style={{ color: "#ffffff", display: "flex", alignItems: "center" }}>
             {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-          </IconButton>
+          </span>
         )}
       </Box>
 
@@ -85,7 +80,7 @@ export default function OverviewPanel({
                   >
                     <Typography
                       sx={{
-                        color: "#888888",
+                        color: "#6d6d6d",
                         fontSize: "9px",
                         letterSpacing: 2,
                         fontWeight: "bold",

@@ -198,11 +198,13 @@ export default function DeviceProfilePage() {
 
             {/* Device Selector */}
             <FormControl sx={{ minWidth: 240 }}>
-              <InputLabel sx={{ color: '#1A1A2E' }}>Select Device</InputLabel>
+              <InputLabel id="device-select-label" sx={{ color: '#1A1A2E' }}>Select Device</InputLabel>
               <Select
+                labelId="device-select-label"
                 value=""
                 label="Select Device"
                 onChange={(e) => handleDeviceSelect(e.target.value)}
+                inputProps={{ title: 'Select Device' }}
                 displayEmpty
                 sx={{
                   backgroundColor: '#ffffff',
