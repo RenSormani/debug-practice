@@ -22,6 +22,10 @@ export default function OverviewPanel({
     >
       {/* Panel Header */}
       <Box
+        role={collapsible ? "button" : undefined}
+        tabIndex={collapsible ? 0 : undefined}
+        aria-expanded={collapsible ? expanded : undefined}
+        aria-controls={collapsible ? `overview-panel-${title}` : undefined}
         sx={{
           display: "flex",
           alignItems: "center",
@@ -29,11 +33,13 @@ export default function OverviewPanel({
           padding: "12px 16px",
           backgroundColor: "#1A1A2E",
           cursor: collapsible ? "pointer" : "default",
+          '&:focus-visible': collapsible ? { outline: '2px solid #FF6B00', outlineOffset: '-2px' } : undefined,
         }}
         onClick={() => collapsible && setExpanded(!expanded)}
+        onKeyDown={(e) => { if (collapsible && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); setExpanded(!expanded); } }}
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <Typography sx={{ fontSize: "18px" }}>{icon}</Typography>
+          <Typography component="span" aria-hidden="true" sx={{ fontSize: "18px" }}>{icon}</Typography>
           <Typography
             sx={{
               color: "#ffffff",
@@ -46,59 +52,66 @@ export default function OverviewPanel({
           </Typography>
         </Box>
         {collapsible && (
-          <IconButton size="small" sx={{ color: "#ffffff" }}>
+          <IconButton
+            size="small"
+            tabIndex={-1}
+            aria-label={expanded ? `Collapse ${title} panel` : `Expand ${title} panel`}
+            sx={{ color: "#ffffff" }}
+          >
             {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
           </IconButton>
         )}
       </Box>
 
       {/* Panel Content */}
-      {expanded && (
-        <Box
-          sx={{
-            backgroundColor: "#ffffff",
-            padding: 1.5,
-          }}
-        >
-          <Grid container spacing={2}>
-            {Object.entries(data).map(([key, value]) => (
-              <Grid item xs={4} key={key}>
-                <Box
-                  sx={{
-                    padding: "6px 10px",
-                    backgroundColor: "#f8f9fa",
-                    borderRadius: 1,
-                    borderLeft: "3px solid #FF6B00",
-                  }}
-                >
-                  <Typography
+      <div id={`overview-panel-${title}`}>
+        {expanded && (
+          <Box
+            sx={{
+              backgroundColor: "#ffffff",
+              padding: 1.5,
+            }}
+          >
+            <Grid container spacing={2}>
+              {Object.entries(data).map(([key, value]) => (
+                <Grid item xs={4} key={key}>
+                  <Box
                     sx={{
-                      color: "#888888",
-                      fontSize: "9px",
-                      letterSpacing: 2,
-                      fontWeight: "bold",
-                      marginBottom: "2px",
-                      textTransform: "uppercase",
+                      padding: "6px 10px",
+                      backgroundColor: "#f8f9fa",
+                      borderRadius: 1,
+                      borderLeft: "3px solid #FF6B00",
                     }}
                   >
-                    {key.replace(/([A-Z])/g, " $1").trim()}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      color: "#1A1A2E",
-                      fontSize: "12px",
-                      fontWeight: "bold",
-                      letterSpacing: 0.5,
-                    }}
-                  >
-                    {value}
-                  </Typography>
-                </Box>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-      )}
+                    <Typography
+                      sx={{
+                        color: "#888888",
+                        fontSize: "9px",
+                        letterSpacing: 2,
+                        fontWeight: "bold",
+                        marginBottom: "2px",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {key.replace(/([A-Z])/g, " $1").trim()}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        color: "#1A1A2E",
+                        fontSize: "12px",
+                        fontWeight: "bold",
+                        letterSpacing: 0.5,
+                      }}
+                    >
+                      {value}
+                    </Typography>
+                  </Box>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        )}
+      </div>
     </Box>
   );
 }

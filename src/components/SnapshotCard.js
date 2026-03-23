@@ -26,7 +26,7 @@ export default function SnapshotCard({ title, icon, rows, expandable = false, ex
           gap: 1,
         }}
       >
-        <Typography sx={{ fontSize: '16px' }}>{icon}</Typography>
+        <Typography component="span" aria-hidden="true" sx={{ fontSize: '16px' }}>{icon}</Typography>
         <Typography
           sx={{
             color: '#ffffff',
@@ -42,7 +42,7 @@ export default function SnapshotCard({ title, icon, rows, expandable = false, ex
           size="small"
           sx={{
             backgroundColor: '#FF6B00',
-            color: '#ffffff',
+            color: '#1A1A2E',
             fontWeight: 'bold',
             fontSize: '10px',
             height: 18,
@@ -57,6 +57,11 @@ export default function SnapshotCard({ title, icon, rows, expandable = false, ex
           <Box key={i}>
             {/* Row */}
             <Box
+              role={expandable ? 'button' : undefined}
+              tabIndex={expandable ? 0 : undefined}
+              aria-expanded={expandable ? expandedRow === i : undefined}
+              onClick={() => expandable && setExpandedRow(expandedRow === i ? null : i)}
+              onKeyDown={(e) => { if (expandable && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); setExpandedRow(expandedRow === i ? null : i); } }}
               sx={{
                 display: 'flex',
                 justifyContent: 'space-between',
@@ -68,8 +73,8 @@ export default function SnapshotCard({ title, icon, rows, expandable = false, ex
                 '&:hover': {
                   backgroundColor: '#f5f5f5',
                 },
+                '&:focus-visible': expandable ? { outline: '2px solid #FF6B00', outlineOffset: '-2px' } : undefined,
               }}
-              onClick={() => expandable && setExpandedRow(expandedRow === i ? null : i)}
             >
               <Typography
                 sx={{
@@ -106,7 +111,7 @@ export default function SnapshotCard({ title, icon, rows, expandable = false, ex
                   />
                 )}
                 {expandable && (
-                  <Typography sx={{ color: '#FF6B00', fontSize: '12px' }}>
+                  <Typography aria-hidden="true" sx={{ color: '#FF6B00', fontSize: '12px' }}>
                     {expandedRow === i ? '▲' : '▼'}
                   </Typography>
                 )}
@@ -134,7 +139,7 @@ export default function SnapshotCard({ title, icon, rows, expandable = false, ex
                     }}
                   >
                     <Typography sx={{ fontSize: '11px', color: '#444', flex: 1 }}>
-                      💻 {item.label}
+                      <span aria-hidden="true">💻 </span>{item.label}
                     </Typography>
                     <Typography sx={{ fontSize: '11px', color: '#888' }}>
                       {item.value}

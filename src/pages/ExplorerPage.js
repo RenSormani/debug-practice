@@ -18,6 +18,7 @@ export default function ExplorerPage() {
   const loading = useSelector((state) => state.network.loading);
   const [searchTerm, setSearchTerm] = useState("");
   const [localData, setLocalData] = useState([]);
+  const [expandedTables, setExpandedTables] = useState({});
 
   // For serverside — dispatches search to API instead of filtering locally
 // useEffect(() => {
@@ -146,10 +147,11 @@ export default function ExplorerPage() {
           placeholder="Search across all tables... (e.g. 192.168.1.1, AS7922, London)"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          inputProps={{ 'aria-label': 'Search across all tables' }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon sx={{ color: "#1A1A2E" }} />
+                <SearchIcon aria-hidden="true" sx={{ color: "#1A1A2E" }} />
               </InputAdornment>
             ),
             endAdornment: searchTerm && (
@@ -180,7 +182,7 @@ export default function ExplorerPage() {
       {/* Tables */}
       {localData.length === 0 ? (
         <Box display="flex" justifyContent="center" alignItems="center" height="200px">
-          <CircularProgress sx={{ color: '#1A1A2E' }} />
+          <CircularProgress sx={{ color: '#1A1A2E' }} aria-label="Loading data" role="status" />
         </Box>
       ) : (
         tables.map((table) => {
@@ -194,6 +196,8 @@ export default function ExplorerPage() {
               loading={loading}
               searchTerm={searchTerm}
               totalCount={table.data.length}
+              expanded={!!expandedTables[table.title]}
+              onToggle={() => setExpandedTables((prev) => ({ ...prev, [table.title]: !prev[table.title] }))}
             />
           );
         })

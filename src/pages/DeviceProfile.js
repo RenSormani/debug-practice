@@ -212,7 +212,7 @@ export default function DeviceProfilePage() {
                 {deviceProfiles.map((d) => (
                   <MenuItem key={d.id} value={d.id}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <DevicesIcon sx={{ fontSize: 16, color: '#FF6B00' }} />
+                      <DevicesIcon aria-hidden="true" sx={{ fontSize: 16, color: '#FF6B00' }} />
                       {d.identity.hostname}
                       {tabs.find((t) => t.id === d.id) && (
                         <Typography sx={{ fontSize: '10px', color: '#FF6B00', ml: 1 }}>
@@ -353,15 +353,18 @@ export default function DeviceProfilePage() {
                   placeholder="Search across all tables..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
+                  inputProps={{ 'aria-label': 'Search all device tables' }}
                   InputProps={{
                     startAdornment: (
                       <InputAdornment position="start">
-                        <SearchIcon sx={{ color: '#1A1A2E' }} />
+                        <SearchIcon aria-hidden="true" sx={{ color: '#1A1A2E' }} />
                       </InputAdornment>
                     ),
                     endAdornment: searchTerm && (
                       <InputAdornment position="end">
                         <Typography
+                          aria-live="polite"
+                          aria-atomic="true"
                           sx={{
                             backgroundColor: totalMatches > 0 ? '#1A1A2E' : '#E63946',
                             color: '#ffffff',
@@ -418,6 +421,9 @@ export default function DeviceProfilePage() {
       {/* Custom Snackbar */}
       {snackbarOpen && (
         <Box
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
           sx={{
             position: 'fixed',
             top: '15%',
@@ -437,17 +443,18 @@ export default function DeviceProfilePage() {
           }}
         >
           <Typography sx={{ fontSize: '13px', fontWeight: 'bold', flex: 1 }}>
-            ✓ URL copied to clipboard
+            <span aria-hidden="true">✓ </span>URL copied to clipboard
           </Typography>
           <IconButton
             size="small"
+            aria-label="Dismiss notification"
             onClick={() => {
               setSnackbarVisible(false);
               setTimeout(() => setSnackbarOpen(false), 400);
             }}
             sx={{ color: '#ffffff', padding: 0.5 }}
           >
-            <CloseIcon fontSize="small" />
+            <CloseIcon aria-hidden="true" fontSize="small" />
           </IconButton>
         </Box>
       )}

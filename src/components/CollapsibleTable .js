@@ -26,6 +26,10 @@ export default function CollapsibleTable({
     >
       {/* Header */}
       <Box
+        role="button"
+        tabIndex={0}
+        aria-expanded={!!expanded}
+        aria-controls={`collapsible-table-${title}`}
         sx={{
           display: 'flex',
           alignItems: 'center',
@@ -33,11 +37,13 @@ export default function CollapsibleTable({
           padding: '12px 16px',
           backgroundColor: '#1A1A2E',
           cursor: 'pointer',
+          '&:focus-visible': { outline: '2px solid #FF6B00', outlineOffset: '-2px' },
         }}
         onClick={onToggle}
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onToggle && onToggle(); } }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <Typography sx={{ fontSize: '18px' }}>{icon}</Typography>
+          <Typography component="span" aria-hidden="true" sx={{ fontSize: '18px' }}>{icon}</Typography>
           <Typography
             sx={{
               color: '#ffffff',
@@ -60,42 +66,44 @@ export default function CollapsibleTable({
                   : isFiltered
                   ? '#FF6B00'
                   : '#ffffff20',
-              color: '#ffffff',
+              color: isFiltered && !hasResults ? '#ffffff' : isFiltered ? '#1A1A2E' : '#ffffff',
               fontWeight: 'bold',
               fontSize: '11px',
             }}
           />
         </Box>
-        <Typography sx={{ color: '#ffffff', fontSize: '20px' }}>
+        <Typography aria-hidden="true" sx={{ color: '#ffffff', fontSize: '20px' }}>
           {expanded ? '▲' : '▼'}
         </Typography>
       </Box>
 
       {/* Content */}
-      {expanded && (
-        !hasResults ? (
-          <Box
-            sx={{
-              padding: 3,
-              textAlign: 'center',
-              backgroundColor: '#fafafa',
-            }}
-          >
-            <Typography sx={{ color: '#999', fontSize: '13px' }}>
-              {isFiltered
-                ? `No results for "${searchTerm}" in this table`
-                : 'No data available'}
-            </Typography>
-          </Box>
-        ) : (
-          <DataTable
-            title=""
-            data={[...data]}
-            loading={loading}
-            error={null}
-          />
-        )
-      )}
+      <div id={`collapsible-table-${title}`}>
+        {expanded && (
+          !hasResults ? (
+            <Box
+              sx={{
+                padding: 3,
+                textAlign: 'center',
+                backgroundColor: '#fafafa',
+              }}
+            >
+              <Typography sx={{ color: '#999', fontSize: '13px' }}>
+                {isFiltered
+                  ? `No results for "${searchTerm}" in this table`
+                  : 'No data available'}
+              </Typography>
+            </Box>
+          ) : (
+            <DataTable
+              title=""
+              data={[...data]}
+              loading={loading}
+              error={null}
+            />
+          )
+        )}
+      </div>
     </Box>
   );
 }

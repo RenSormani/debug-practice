@@ -22,7 +22,7 @@ export default function NetworkPage() {
   if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="400px">
-        <CircularProgress sx={{ color: '#1A1A2E' }} />
+        <CircularProgress sx={{ color: '#1A1A2E' }} aria-label="Loading network data" role="status" />
       </Box>
     );
   }
@@ -61,7 +61,8 @@ export default function NetworkPage() {
         <Box sx={{ display: 'flex', gap: 1 }}>
           <Button
             variant={view === 'table' ? 'contained' : 'outlined'}
-            startIcon={<TableChartIcon />}
+            startIcon={<TableChartIcon aria-hidden="true" />}
+            aria-pressed={view === 'table'}
             onClick={() => setView('table')}
             sx={{
               backgroundColor: view === 'table' ? '#1A1A2E' : 'transparent',
@@ -76,7 +77,8 @@ export default function NetworkPage() {
           </Button>
           <Button
             variant={view === 'graph' ? 'contained' : 'outlined'}
-            startIcon={<AccountTreeIcon />}
+            startIcon={<AccountTreeIcon aria-hidden="true" />}
+            aria-pressed={view === 'graph'}
             onClick={() => setView('graph')}
             sx={{
               backgroundColor: view === 'graph' ? '#FF6B00' : 'transparent',

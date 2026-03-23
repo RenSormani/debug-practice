@@ -330,6 +330,8 @@ export default function NetworkGraph({ data }) {
       <CytoscapeComponent
         elements={elements}
         style={{ width: '100%', height: '600px' }}
+        aria-label="Network topology graph"
+        aria-describedby="network-graph-desc"
         stylesheet={stylesheet}
         layout={{
           name: 'breadthfirst',
@@ -375,6 +377,11 @@ export default function NetworkGraph({ data }) {
         }}
       />
 
+      {/* Screen-reader description of graph */}
+      <p id="network-graph-desc" style={{ position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap' }}>
+        Interactive network topology graph showing relationships between countries, cities, ASNs, and IP addresses. Click nodes or edges to view details.
+      </p>
+
       {/* Floating Panel */}
       {panel && (
         <Paper
@@ -412,10 +419,11 @@ export default function NetworkGraph({ data }) {
             </Typography>
             <IconButton
               size="small"
+              aria-label="Close panel"
               onClick={() => setPanel(null)}
               sx={{ color: '#ffffff', padding: '2px' }}
             >
-              <CloseIcon fontSize="small" />
+              <CloseIcon aria-hidden="true" fontSize="small" />
             </IconButton>
           </Box>
 
@@ -426,6 +434,8 @@ export default function NetworkGraph({ data }) {
                 {panel.columns.map((col) => (
                   <TableCell
                     key={col}
+                    component="th"
+                    scope="col"
                     sx={{
                       color: '#FF6B00',
                       fontWeight: 'bold',

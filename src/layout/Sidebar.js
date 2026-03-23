@@ -20,12 +20,12 @@ import RouterIcon from '@mui/icons-material/Router';
 const SIDEBAR_WIDTH = 240;
 
 const navItems = [
-  { label: "Users", path: "/users", icon: <PeopleIcon /> },
-  { label: "Posts", path: "/posts", icon: <ArticleIcon /> },
-  { label: "Todos", path: "/todos", icon: <CheckBoxIcon /> },
-  { label: "Network", path: "/network", icon: <HubIcon /> },
-  { label: "Explorer", path: "/explorer", icon: <ExploreIcon /> },
-  { label: 'Device Profile', path: '/device-profile', icon: <RouterIcon /> },
+  { label: "Users", path: "/users", icon: <PeopleIcon aria-hidden="true" /> },
+  { label: "Posts", path: "/posts", icon: <ArticleIcon aria-hidden="true" /> },
+  { label: "Todos", path: "/todos", icon: <CheckBoxIcon aria-hidden="true" /> },
+  { label: "Network", path: "/network", icon: <HubIcon aria-hidden="true" /> },
+  { label: "Explorer", path: "/explorer", icon: <ExploreIcon aria-hidden="true" /> },
+  { label: 'Device Profile', path: '/device-profile', icon: <RouterIcon aria-hidden="true" /> },
 ];
 
 export default function Sidebar() {
@@ -34,6 +34,8 @@ export default function Sidebar() {
 
   return (
     <Box
+      component="nav"
+      aria-label="Main navigation"
       sx={{
         width: SIDEBAR_WIDTH,
         minHeight: "100vh",
@@ -81,6 +83,7 @@ export default function Sidebar() {
             <ListItem key={item.path} disablePadding sx={{ marginBottom: 0.5 }}>
               <ListItemButton
                 onClick={() => navigate(item.path)}
+                aria-current={isActive ? "page" : undefined}
                 sx={{
                   borderRadius: 2,
                   backgroundColor: isActive ? "#FF6B00" : "transparent",
@@ -117,7 +120,7 @@ export default function Sidebar() {
       <Box sx={{ padding: 2 }}>
         <Typography
           variant="caption"
-          sx={{ color: "#ffffff30", letterSpacing: 1 }}
+          sx={{ color: "#ffffff80", letterSpacing: 1 }}
         >
           JSONPlaceholder API
         </Typography>

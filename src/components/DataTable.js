@@ -24,7 +24,7 @@ export default function DataTable({ title, data, loading, error }) {
         alignItems="center"
         height="400px"
       >
-        <CircularProgress sx={{ color: "#1A1A2E" }} />
+        <CircularProgress sx={{ color: "#1A1A2E" }} aria-label="Loading data" role="status" />
       </Box>
     );
   }

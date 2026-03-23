@@ -39,24 +39,29 @@ export default function ConfigDrawer({ device }) {
           flexDirection: "column",
           alignItems: "center",
           paddingTop: 1,
-          cursor: "pointer",
           borderLeft: "2px solid #FF6B00",
           "&:hover": {
             backgroundColor: "#16213E",
           },
         }}
-        onClick={() => setOpen(!open)}
       >
         <Tooltip
           title={open ? "Click to close" : "Click to open and view config/json"}
           placement="left"
           arrow
         >
-          <IconButton size="small" sx={{ color: "#FF6B00", padding: 0.5 }}>
+          <IconButton
+            size="small"
+            aria-expanded={open}
+            aria-label={open ? "Close file contents drawer" : "Open file contents drawer"}
+            onClick={() => setOpen(!open)}
+            onKeyDown={(e) => { if (e.key === 'Escape' && open) setOpen(false); }}
+            sx={{ color: "#FF6B00", padding: 0.5 }}
+          >
             {open ? (
-              <KeyboardDoubleArrowRightIcon sx={{ fontSize: 40 }} />
+              <KeyboardDoubleArrowRightIcon aria-hidden="true" sx={{ fontSize: 40 }} />
             ) : (
-              <KeyboardDoubleArrowLeftIcon sx={{ fontSize: 40 }} />
+              <KeyboardDoubleArrowLeftIcon aria-hidden="true" sx={{ fontSize: 40 }} />
             )}
           </IconButton>
         </Tooltip>

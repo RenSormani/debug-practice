@@ -32,7 +32,7 @@ export default function SummaryPanel({ tables, openTables, onToggle }) {
             letterSpacing: 2,
           }}
         >
-          📊 SUMMARY
+          <span aria-hidden="true">📊 </span>SUMMARY
         </Typography>
       </Box>
 
@@ -42,7 +42,11 @@ export default function SummaryPanel({ tables, openTables, onToggle }) {
         return (
           <Box
             key={table.title}
+            role="button"
+            tabIndex={0}
+            aria-pressed={!!isOpen}
             onClick={() => onToggle(table.title)}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onToggle(table.title); } }}
             sx={{
               display: "flex",
               alignItems: "center",
@@ -58,10 +62,14 @@ export default function SummaryPanel({ tables, openTables, onToggle }) {
               "&:hover": {
                 backgroundColor: isOpen ? "#FF6B0020" : "#f5f5f5",
               },
+              "&:focus-visible": {
+                outline: "2px solid #FF6B00",
+                outlineOffset: "-2px",
+              },
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-              <Typography sx={{ fontSize: "14px" }}>{table.icon}</Typography>
+              <Typography aria-hidden="true" sx={{ fontSize: "14px" }}>{table.icon}</Typography>
               <Typography
                 sx={{
                   fontSize: "12px",
@@ -89,7 +97,7 @@ export default function SummaryPanel({ tables, openTables, onToggle }) {
                 sx={{
                   fontSize: "10px",
                   fontWeight: "bold",
-                  color: isOpen ? "#ffffff" : "#666",
+                  color: isOpen ? "#1A1A2E" : "#555555",
                 }}
               >
                 {table.count}
